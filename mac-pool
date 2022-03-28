@@ -1,0 +1,11 @@
+resource "intersight_macpool_pool" "cisco_0F" {
+  name = "cisco_0f"
+  tags = [local.terraform]
+  dynamic "mac_blocks" {
+    for_each = formatlist("%X", range(0, 1))     // range(0, XX) XX는 천단위 숫자 
+    content {
+      from = "00:25:B5:0F:${mac_blocks.value}0:00"
+      size = 1000                               //size 단위 조절 
+    }
+  }
+}
